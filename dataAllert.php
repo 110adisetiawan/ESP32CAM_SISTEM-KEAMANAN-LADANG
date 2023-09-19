@@ -20,6 +20,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -188,8 +192,36 @@
                                             <?php $i++; ?>
                                             <div class="col-lg-3 col-md-4 col-6">
                                                 <a href="#" class="d-block mb-4 h-100">
-                                                    <img class="img-fluid img-thumbnail lg" src="<?php echo "img/" . $row["nama_foto"]; ?>" alt="">
+                                                    <img data-bs-toggle="modal" data-bs-target="#modal<?php echo $row["id"]; ?>" class="img-fluid img-thumbnail lg border border-5 border-<?php if ($row["status"] == "AMAN") {
+                                                                                                                                                                                                echo "success";
+                                                                                                                                                                                            } else if ($row["status"] == "WARNING") {
+                                                                                                                                                                                                echo "warning";
+                                                                                                                                                                                            } else echo "danger"; ?>" src="<?php echo "img/" . $row["nama_foto"]; ?>" alt="">
                                                 </a>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modal<?php echo $row["id"]; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">ID LAPORAN : <?= $row["id"]; ?></h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="card" style="width: 29rem;">
+                                                                <img src="<?php echo "img/" . $row["nama_foto"]; ?>" class="card-img-top" alt="img-thumbnails">
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title"><?php echo "WAKTU KEJADIAN : " . $row["waktu"]; ?></h5>
+                                                                    <h5 class="card-title"><?php echo "STATUS : " . $row["status"]; ?></h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
@@ -202,8 +234,11 @@
                         <!-- Pie Chart -->
 
 
+
                     </div>
                     <!-- End of Main Content -->
+
+
 
                     <!-- Footer -->
                     <footer class="sticky-footer bg-white">

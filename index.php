@@ -212,9 +212,30 @@ require 'database/conn.php';
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
+
+
+                                    <?php
+                                    $i = 1;
+                                    $rows = mysqli_query($conn, "SELECT * FROM alarm");
+                                    ?>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Nama Sensor</th>
+                                                <th scope="col">Waktu Kejadian</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($rows as $row) : $i++; ?>
+                                                <tr>
+                                                    <th scope="row"><?= $i; ?></th>
+                                                    <td><?= $row["nama_sensor"] ?></td>
+                                                    <td><?= $row["waktu"] ?></td>
+                                                </tr>
+                                            <?php endforeach ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
