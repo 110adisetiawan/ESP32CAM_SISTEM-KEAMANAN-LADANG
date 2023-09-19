@@ -67,7 +67,7 @@ require 'database/conn.php';
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data dan Setting:</h6>
                         <a class="collapse-item" href="dataAllert.php">Data Allert</a>
-                        <a class="collapse-item" href="setting_sensor.html">Setting Sensor</a>
+                        <a class="collapse-item" href="setting_sensor.php">Setting Sensor</a>
                     </div>
                 </div>
             </li>
@@ -135,7 +135,7 @@ require 'database/conn.php';
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="setting_sensor.php">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
@@ -186,6 +186,7 @@ require 'database/conn.php';
                                                         <div class="card-body">
                                                             <h5 class="card-title"><?php echo "ID Alarm : " . $row["waktu"]; ?></h5>
                                                             <h5 class="card-title"><?php echo "WAKTU KEJADIAN : " . $row["waktu"]; ?></h5>
+                                                            <h5 class="card-title"><?php echo "STATUS ALARM : " . $row["statusAlarm"]; ?></h5>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -216,7 +217,7 @@ require 'database/conn.php';
 
                                     <?php
                                     $i = 1;
-                                    $rows = mysqli_query($conn, "SELECT * FROM alarm");
+                                    $rows = mysqli_query($conn, "SELECT * FROM alarm ORDER BY ID DESC LIMIT 6");
                                     ?>
                                     <table class="table">
                                         <thead>

@@ -1,4 +1,14 @@
-<?php require 'database/conn.php'; ?>
+<?php require 'database/conn.php';
+
+session_start();
+
+if (isset($_SESSION['flash_message'])) {
+    $message = $_SESSION['flash_message'];
+    unset($_SESSION['flash_message']);
+    echo "<script>alert(' . $message . ');</script>";
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +80,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Data dan Setting:</h6>
                         <a class="collapse-item active" href="dataAllert.php">Data Allert</a>
-                        <a class="collapse-item" href="setting_sensor.html">Setting Sensor</a>
+                        <a class="collapse-item" href="setting_sensor.php">Setting Sensor</a>
                     </div>
                 </div>
             </li>
@@ -192,9 +202,9 @@
                                             <?php $i++; ?>
                                             <div class="col-lg-3 col-md-4 col-6">
                                                 <a href="#" class="d-block mb-4 h-100">
-                                                    <img data-bs-toggle="modal" data-bs-target="#modal<?php echo $row["id"]; ?>" class="img-fluid img-thumbnail lg border border-5 border-<?php if ($row["status"] == "AMAN") {
+                                                    <img data-bs-toggle="modal" data-bs-target="#modal<?php echo $row["id"]; ?>" class="img-fluid img-thumbnail lg border border-5 border-<?php if ($row["statusAlarm"] == "AMAN") {
                                                                                                                                                                                                 echo "success";
-                                                                                                                                                                                            } else if ($row["status"] == "WARNING") {
+                                                                                                                                                                                            } else if ($row["statusAlarm"] == "WARNING") {
                                                                                                                                                                                                 echo "warning";
                                                                                                                                                                                             } else echo "danger"; ?>" src="<?php echo "img/" . $row["nama_foto"]; ?>" alt="">
                                                 </a>
@@ -212,14 +222,22 @@
                                                                 <img src="<?php echo "img/" . $row["nama_foto"]; ?>" class="card-img-top" alt="img-thumbnails">
                                                                 <div class="card-body">
                                                                     <h5 class="card-title"><?php echo "WAKTU KEJADIAN : " . $row["waktu"]; ?></h5>
-                                                                    <h5 class="card-title"><?php echo "STATUS : " . $row["status"]; ?></h5>
+                                                                    <h5 class="card-title"><?php echo "STATUS : " . $row["statusAlarm"]; ?></h5>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                                        </div>
+                                                        <form method="post" action="postData.php">
+                                                            <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
+                                                            <div class="modal-footer">
+                                                                <select class="form-select" name="status">
+                                                                    <option selected><?= $row["statusAlarm"]; ?></option>
+                                                                    <option value="AMAN">AMAN</option>
+                                                                    <option value="MALING">MALING</option>
+                                                                </select>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
